@@ -6,17 +6,16 @@ import (
 	"github.com/golang/freetype"
 	"github.com/nfnt/resize"
 	"golang.org/x/image/font"
+	"golang.org/x/image/font/gofont/gomono"
 	"image"
 	"image/color/palette"
 	"image/draw"
 	"image/gif"
 	"image/png"
-	"io/ioutil"
 	"net/http"
 	"sort"
 	"sync"
 	"time"
-
 )
 
 type mapImage struct {
@@ -67,12 +66,8 @@ func (m mapImage) createLabelImg() (*image.RGBA, error) {
 	flag.Parse()
 	fontSize := 24.
 	spacing := 1.5
-	fontBytes, err := ioutil.ReadFile("../aemet/fonts/luxisr.ttf")
-	if err != nil {
-		return nil, err
-	}
 
-	f, err := freetype.ParseFont(fontBytes)
+	f, err := freetype.ParseFont(gomono.TTF)
 	if err != nil {
 		return nil, err
 	}
