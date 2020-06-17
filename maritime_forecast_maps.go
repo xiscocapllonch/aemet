@@ -73,7 +73,7 @@ func (m mapImage) createLabelImg() (*image.RGBA, error) {
 	}
 
 	fg, bg := image.Black, image.White
-	rgba := image.NewRGBA(image.Rect(0, 0, 220, 50))
+	rgba := image.NewRGBA(image.Rect(0, 0, 250, 50))
 	draw.Draw(rgba, rgba.Bounds(), bg, image.ZP, draw.Src)
 	c := freetype.NewContext()
 	c.SetDPI(72)
