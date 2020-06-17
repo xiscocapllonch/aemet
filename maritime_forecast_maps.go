@@ -13,6 +13,7 @@ import (
 	"image/png"
 	"io/ioutil"
 	"net/http"
+	"path/filepath"
 	"sort"
 	"sync"
 	"time"
@@ -63,7 +64,12 @@ func (m mapImage) createLabelImg() (*image.RGBA, error) {
 	fontSize := 24.
 	spacing := 1.5
 
-	fontBytes, err := ioutil.ReadFile("./fonts/luxisr.ttf")
+	filePrefix, err := filepath.Abs("./fonts/")
+	if err != nil {
+		return nil, err
+	}
+
+	fontBytes, err := ioutil.ReadFile(filePrefix + "/luxisr.ttf")
 	if err != nil {
 		return nil, err
 	}
