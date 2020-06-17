@@ -13,10 +13,10 @@ import (
 	"image/png"
 	"io/ioutil"
 	"net/http"
-	"path/filepath"
 	"sort"
 	"sync"
 	"time"
+
 )
 
 type mapImage struct {
@@ -25,6 +25,10 @@ type mapImage struct {
 	label string
 	image *image.Paletted
 	err   error
+}
+
+func init() {
+
 }
 
 func newImg(id, delay int, baseTime time.Time, zoneCode string, wind bool) mapImage {
@@ -63,13 +67,7 @@ func (m mapImage) createLabelImg() (*image.RGBA, error) {
 	flag.Parse()
 	fontSize := 24.
 	spacing := 1.5
-
-	absPath, err := filepath.Abs("./fonts/luxisr.ttf")
-	if err != nil {
-		return nil, err
-	}
-
-	fontBytes, err := ioutil.ReadFile(absPath)
+	fontBytes, err := ioutil.ReadFile("../aemet/fonts/luxisr.ttf")
 	if err != nil {
 		return nil, err
 	}
