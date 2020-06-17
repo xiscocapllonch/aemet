@@ -64,12 +64,12 @@ func (m mapImage) createLabelImg() (*image.RGBA, error) {
 	fontSize := 24.
 	spacing := 1.5
 
-	filePrefix, err := filepath.Abs("./fonts/")
+	absPath, err := filepath.Abs("../aemet/fonts/luxisr.ttf")
 	if err != nil {
 		return nil, err
 	}
 
-	fontBytes, err := ioutil.ReadFile(filePrefix + "/luxisr.ttf")
+	fontBytes, err := ioutil.ReadFile(absPath)
 	if err != nil {
 		return nil, err
 	}
