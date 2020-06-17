@@ -26,12 +26,12 @@ type mapImage struct {
 	err   error
 }
 
-func init() {
-
-}
-
 func newImg(id, delay int, baseTime time.Time, zoneCode string, wind bool) mapImage {
-	local := baseTime.Add(time.Duration(delay) * time.Hour).Local()
+	location, err := time.LoadLocation("Europe/Madrid")
+	if err != nil {
+		return mapImage{err: err}
+	}
+	local := baseTime.Add(time.Duration(delay) * time.Hour).In(location)
 
 	return mapImage{
 		id:    id,
@@ -182,9 +182,15 @@ func getImages(zoneCode string, forecastNbr int, wind bool) ([]*image.Paletted, 
 
 	for i := 0; i < forecastNbr; i++ {
 		mapImg := newImg(i, i*3, baseTime, zoneCode, wind)
+
 		wg.Add(1)
 		go func() {
 			defer wg.Done()
+			if mapImg.err != nil {
+				images = append(images, mapImg)
+				return
+			}
+
 			sourceImg, err := mapImg.getImg()
 			if err != nil {
 				mapImg.err = err
